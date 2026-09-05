@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LeetSync</title>
-  <link rel="stylesheet" href="popup.css" />
+  <link rel="stylesheet" href="popup.css"/>
 </head>
 <body>
 
@@ -13,26 +13,48 @@
     <div class="logo">
       <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
         <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#f97316" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M2 17l10 5 10-5" stroke="#f97316" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M2 12l10 5 10-5" stroke="#10b981" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M2 17l10 5 10-5"            stroke="#f97316" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M2 12l10 5 10-5"            stroke="#10b981" stroke-width="2" stroke-linejoin="round"/>
       </svg>
       <span class="logo-text">Leet<span class="logo-accent">Sync</span></span>
     </div>
     <span class="version">v1.0.0</span>
   </header>
 
-  <!-- ── View 1: Setup ──────────────────────────────────────────────────── -->
+  <!-- ══════════════════════════════════════════════════════════════════════
+       VIEW 1 — Setup
+  ══════════════════════════════════════════════════════════════════════════ -->
   <section id="view-setup" class="view active">
     <p class="view-title">Connect GitHub</p>
-    <p class="view-sub">Paste a Personal Access Token with <code>repo</code> scope.</p>
+    <p class="view-sub">One click — we'll handle the rest.</p>
+
+    <!-- Primary: OAuth / GitHub App -->
+    <button id="oauth-btn" class="btn btn-oauth">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+      </svg>
+      <span id="oauth-label">Connect with GitHub</span>
+      <span id="oauth-spinner" class="spinner hidden"></span>
+    </button>
+
+    <div class="trust-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <span>You choose only the specific repositories you want to connect.</span>
+    </div>
+
+    <div id="setup-error" class="error-msg hidden"></div>
+
+    <!-- Secondary: PAT -->
+    <div class="auth-divider"><span>or use a Personal Access Token</span></div>
 
     <div class="input-group">
       <input id="pat-input" type="password" class="input"
-        placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false"/>
+        placeholder="github_pat_xxxx or ghp_xxxx" autocomplete="off" spellcheck="false"/>
       <button id="pat-toggle" class="icon-btn" title="Show / hide token">
         <svg id="eye-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-          <circle cx="12" cy="12" r="3"/>
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
         </svg>
         <svg id="eye-hide" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
@@ -42,22 +64,103 @@
       </button>
     </div>
 
-    <div id="setup-error" class="error-msg hidden"></div>
-
-    <button id="connect-btn" class="btn btn-primary">
-      <span id="connect-label">Connect to GitHub</span>
+    <button id="connect-btn" class="btn btn-secondary">
+      <span id="connect-label">Connect with Token</span>
       <span id="connect-spinner" class="spinner hidden"></span>
     </button>
 
-    <a href="https://github.com/settings/tokens/new?scopes=repo&description=LeetSync"
-       target="_blank" class="help-link">How to create a token →</a>
+    <a href="https://github.com/settings/personal-access-tokens/new"
+       target="_blank" class="help-link">Create a token (select only your LeetCode repo) →</a>
   </section>
 
-  <!-- ── View 2: Repo Picker ────────────────────────────────────────────── -->
+  <!-- ══════════════════════════════════════════════════════════════════════
+       VIEW 2 — OAuth Device Flow
+       Auto-opens github.com/login/device, shows code to paste
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="view-oauth" class="view">
+
+    <!-- Step indicators -->
+    <div class="steps-row">
+      <div class="step done" id="step-1">
+        <div class="step-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+        <span>Tab opened</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step active" id="step-2">
+        <div class="step-dot"><span>2</span></div>
+        <span>Paste code</span>
+      </div>
+      <div class="step-line"></div>
+      <div class="step" id="step-3">
+        <div class="step-dot"><span>3</span></div>
+        <span>Authorize</span>
+      </div>
+    </div>
+
+    <p class="view-title" style="text-align:center;">Paste this code on GitHub</p>
+    <p class="view-sub" style="text-align:center;">
+      We opened <strong>github.com/login/device</strong> for you.<br/>
+      Copy the code below and paste it there.
+    </p>
+
+    <!-- Big code + copy button -->
+    <div class="device-code-box">
+      <span id="device-user-code" class="device-code">XXXX-XXXX</span>
+      <button id="copy-code-btn" class="copy-pill">
+        <svg id="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+        </svg>
+        <svg id="copied-icon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" width="13" height="13">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span id="copy-label">Copy</span>
+      </button>
+    </div>
+
+    <!-- Re-open tab button (in case user closed it) -->
+    <a id="device-verify-link" href="https://github.com/login/device" target="_blank"
+       class="reopen-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+      Re-open github.com/login/device
+    </a>
+
+    <!-- Status -->
+    <div class="oauth-status">
+      <span class="spinner-sm"></span>
+      <span id="oauth-status-text">Waiting for you to authorize…</span>
+    </div>
+
+    <div class="oauth-timer">
+      Code expires in <span id="oauth-countdown">15:00</span>
+    </div>
+
+    <div id="oauth-error" class="error-msg hidden"></div>
+
+    <button id="oauth-cancel-btn" class="btn btn-ghost btn-sm" style="width:auto;align-self:center;">
+      Cancel
+    </button>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       VIEW 3 — Repo Picker
+  ══════════════════════════════════════════════════════════════════════════ -->
   <section id="view-picker" class="view">
-    <div class="connected-badge">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-      <span id="picker-username"></span>
+    <div class="picker-header-row">
+      <div class="connected-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <span id="picker-username"></span>
+      </div>
+      <button id="picker-logout-btn" class="logout-link" title="Disconnect account">Log out</button>
     </div>
 
     <p class="view-title">Choose a repository</p>
@@ -81,14 +184,20 @@
     </div>
 
     <div id="picker-error" class="error-msg hidden"></div>
-
     <button id="start-sync-btn" class="btn btn-primary" disabled>Start Syncing →</button>
+    <a href="https://github.com/settings/installations" target="_blank" class="help-link" style="margin-top:6px;">
+      Manage or add allowed repositories on GitHub ↗
+    </a>
+    <button id="picker-disconnect-btn" class="btn btn-ghost btn-sm" style="color: var(--text-3); align-self: center; margin-top: 4px;">
+      Disconnect / Log out
+    </button>
   </section>
 
-  <!-- ── View 3: Dashboard ──────────────────────────────────────────────── -->
+  <!-- ══════════════════════════════════════════════════════════════════════
+       VIEW 4 — Dashboard
+  ══════════════════════════════════════════════════════════════════════════ -->
   <section id="view-dashboard" class="view">
 
-    <!-- Status bar -->
     <div class="status-row">
       <span class="live-dot"></span>
       <span class="live-label">Active</span>
@@ -98,12 +207,28 @@
         </svg>
         <span id="repo-name-display"></span>
       </a>
+      <button id="refresh-btn" class="icon-btn refresh-btn" title="Refresh from GitHub">
+        <svg id="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 4 23 10 17 10"/>
+          <polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+        </svg>
+      </button>
     </div>
 
-    <!-- ── Streak + Timer row ──────────────────────────────────────────── -->
-    <div class="highlight-row">
+    <div id="insights-status" class="insights-status hidden">
+      <span class="spinner-sm"></span>
+      <span id="insights-status-text">Fetching from GitHub…</span>
+    </div>
+    <div id="insights-cached" class="insights-cached hidden">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="10" height="10">
+        <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+        <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+      </svg>
+      <span id="insights-cached-text">Synced from GitHub</span>
+    </div>
 
-      <!-- Daily Streak -->
+    <div class="highlight-row">
       <div class="highlight-card streak-card">
         <div class="highlight-icon">🔥</div>
         <div class="highlight-body">
@@ -112,8 +237,6 @@
         </div>
         <div class="highlight-sub" id="best-streak-label">Best: 0</div>
       </div>
-
-      <!-- Timer (last solve) -->
       <div class="highlight-card timer-card">
         <div class="highlight-icon">⏱</div>
         <div class="highlight-body">
@@ -122,52 +245,36 @@
         </div>
         <div class="highlight-sub" id="avg-time-label">Avg: —</div>
       </div>
-
     </div>
 
-    <!-- ── Difficulty breakdown ────────────────────────────────────────── -->
     <div class="diff-section">
       <div class="diff-header">
         <span class="diff-title">Problems Solved</span>
         <span class="diff-total" id="stat-total">0</span>
       </div>
-
-      <!-- Easy -->
       <div class="diff-row">
         <span class="diff-label easy">Easy</span>
-        <div class="diff-bar-wrap">
-          <div class="diff-bar easy" id="bar-easy"></div>
-        </div>
+        <div class="diff-bar-wrap"><div class="diff-bar easy" id="bar-easy"></div></div>
         <span class="diff-count" id="stat-easy">0</span>
       </div>
-
-      <!-- Medium -->
       <div class="diff-row">
         <span class="diff-label medium">Medium</span>
-        <div class="diff-bar-wrap">
-          <div class="diff-bar medium" id="bar-medium"></div>
-        </div>
+        <div class="diff-bar-wrap"><div class="diff-bar medium" id="bar-medium"></div></div>
         <span class="diff-count" id="stat-medium">0</span>
       </div>
-
-      <!-- Hard -->
       <div class="diff-row">
         <span class="diff-label hard">Hard</span>
-        <div class="diff-bar-wrap">
-          <div class="diff-bar hard" id="bar-hard"></div>
-        </div>
+        <div class="diff-bar-wrap"><div class="diff-bar hard" id="bar-hard"></div></div>
         <span class="diff-count" id="stat-hard">0</span>
       </div>
     </div>
 
-    <!-- ── Last synced ─────────────────────────────────────────────────── -->
     <div id="last-sync-row" class="last-sync hidden">
       <span id="last-sync-diff-badge" class="diff-badge"></span>
       <span id="last-sync-text"></span>
       <span id="last-sync-time" class="last-sync-time"></span>
     </div>
 
-    <!-- ── Settings ───────────────────────────────────────────────────── -->
     <div class="settings-section">
       <button id="settings-toggle" class="settings-toggle">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -179,7 +286,6 @@
           <polyline points="6 9 12 15 18 9"/>
         </svg>
       </button>
-
       <div id="settings-panel" class="settings-panel hidden">
         <label class="toggle-row">
           <span>Auto-sync on Accept</span>
@@ -199,17 +305,20 @@
           <button id="settings-save" class="btn btn-secondary btn-sm">Save</button>
           <span id="settings-saved" class="saved-msg hidden">Saved ✓</span>
         </div>
+        <div style="margin: 8px 0 4px; height: 1px; background: var(--border);"></div>
+        <a href="https://github.com/settings/installations" target="_blank" class="help-link" style="text-align: left; display: block;">
+          Manage repository access on GitHub ↗
+        </a>
       </div>
     </div>
 
-    <!-- ── Footer ─────────────────────────────────────────────────────── -->
     <div class="footer-actions">
       <button id="disconnect-btn" class="btn btn-danger-ghost">Disconnect</button>
     </div>
     <div id="disconnect-confirm" class="confirm-row hidden">
       <span>Are you sure?</span>
       <button id="disconnect-yes" class="btn btn-danger btn-sm">Yes</button>
-      <button id="disconnect-no"  class="btn btn-ghost btn-sm">Cancel</button>
+      <button id="disconnect-no"  class="btn btn-ghost  btn-sm">Cancel</button>
     </div>
 
   </section>

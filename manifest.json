@@ -4,11 +4,12 @@
   "version": "1.0.0",
   "description": "Sync your LeetCode solutions to GitHub, automatically.",
   "author": "Mohd Altamish",
-  "permissions": ["storage"],
+  "permissions": ["storage", "tabs", "clipboardWrite"],
   "host_permissions": [
     "https://leetcode.com/*",
     "https://leetcode.cn/*",
-    "https://api.github.com/*"
+    "https://api.github.com/*",
+    "https://github.com/*"
   ],
   "action": {
     "default_popup": "popup/popup.html",

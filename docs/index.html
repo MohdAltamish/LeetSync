@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="LeetSync — Automatically sync your LeetCode solutions to GitHub. Privacy-first, per-repository access, powered by GitHub Apps."/>
+  <meta property="og:title" content="LeetSync — Sync LeetCode to GitHub Automatically"/>
+  <meta property="og:description" content="Commit accepted LeetCode solutions with clean READMEs, stats, and percentiles. 100% private per-repository access."/>
+  <meta property="og:image" content="assets/logo.png"/>
+  <title>LeetSync — Sync LeetCode to GitHub Automatically & Privately</title>
+  <link rel="icon" type="image/png" href="assets/logo.png"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ── Background Glow ────────────────────────────────────────────────── -->
+  <div class="glow-bg glow-1"></div>
+  <div class="glow-bg glow-2"></div>
+  <div class="glow-bg glow-3"></div>
+
+  <!-- ── Navigation ─────────────────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="assets/logo.png" alt="LeetSync Logo" class="nav-logo-img" />
+        <span>Leet<span class="accent-o">Sync</span></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#simulator">Live Demo</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#features">Features</a>
+        <a href="#languages">Languages</a>
+        <a href="#preview">Repo Preview</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="https://github.com/MohdAltamish/LeetSync" target="_blank" class="nav-gh">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+        <a href="downloads/leetsync-extension.zip" download class="nav-download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Download (.zip)</span>
+        </a>
+        <a href="https://github.com/apps/leetsync-app/installations/new" target="_blank" class="nav-cta">
+          Install App ↗
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Hero Section ───────────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span>Privacy-First · Per-Repository Scoped · Powered by GitHub App</span>
+    </div>
+
+    <h1 class="hero-title">
+      Sync your LeetCode<br/>
+      solutions to <span class="accent-gradient">GitHub.</span><br/>
+      <span class="hero-subline">Automatically. Securely.</span>
+    </h1>
+
+    <p class="hero-sub">
+      The modern, open-source competitive programming companion. Every Accepted submission is committed to your repository with runtime percentiles, formatted problem descriptions, and live streak tracking — with <strong>access strictly limited to the single repository you choose</strong>.
+    </p>
+
+    <div class="hero-actions">
+      <a href="downloads/leetsync-extension.zip" download class="btn-download">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download Extension (.zip)
+      </a>
+      <a href="https://github.com/apps/leetsync-app/installations/new" target="_blank" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        Install GitHub App
+      </a>
+      <a href="https://github.com/MohdAltamish/LeetSync" target="_blank" class="btn-secondary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+        Star on GitHub
+      </a>
+      <a href="#simulator" class="btn-ghost">
+        Try Interactive Demo ↓
+      </a>
+    </div>
+
+    <!-- Quick stats strip -->
+    <div class="hero-stats-strip">
+      <div class="h-stat"><span class="h-stat-num">100%</span><span class="h-stat-lbl">Private & Scoped</span></div>
+      <div class="h-stat-div"></div>
+      <div class="h-stat"><span class="h-stat-num">&lt; 1s</span><span class="h-stat-lbl">Sync Latency</span></div>
+      <div class="h-stat-div"></div>
+      <div class="h-stat"><span class="h-stat-num">18+</span><span class="h-stat-lbl">Languages Supported</span></div>
+      <div class="h-stat-div"></div>
+      <div class="h-stat"><span class="h-stat-num">$0</span><span class="h-stat-lbl">Free & Open Source</span></div>
+    </div>
+  </header>
+
+  <!-- ── Interactive Live Simulator ────────────────────────────────────── -->
+  <section class="section" id="simulator">
+    <div class="section-inner">
+      <div class="section-badge">Interactive Playground</div>
+      <h2 class="section-title">See LeetSync in action.</h2>
+      <p class="section-sub">Switch languages or click <strong>"Submit Solution"</strong> to simulate an accepted submission and watch the live extension sync in real time!</p>
+
+      <div class="simulator-window">
+        <div class="sim-browser-bar">
+          <div class="sim-dots"><span></span><span></span><span></span></div>
+          <div class="sim-url">leetcode.com/problems/two-sum</div>
+          <div class="sim-status-tag" id="sim-status-tag">Ready</div>
+        </div>
+
+        <div class="sim-layout">
+          <!-- Left: Code editor -->
+          <div class="sim-editor-panel">
+            <div class="sim-editor-header">
+              <div class="editor-tabs">
+                <button class="file-tab active" onclick="switchSimLang('py')">solution.py</button>
+                <button class="file-tab" onclick="switchSimLang('cpp')">solution.cpp</button>
+                <button class="file-tab" onclick="switchSimLang('java')">Solution.java</button>
+                <button class="file-tab" onclick="switchSimLang('ts')">solution.ts</button>
+              </div>
+              <span class="file-meta" id="sim-problem-meta">Python 3 · Two Sum</span>
+            </div>
+
+            <pre class="sim-code"><code id="sim-code-content"><span class="c-kw">class</span> <span class="c-fn">Solution</span>:
+    <span class="c-kw">def</span> <span class="c-fn">twoSum</span>(self, nums: List[int], target: int) -> List[int]:
+        lookup = {}
+        <span class="c-kw">for</span> i, num <span class="c-kw">in</span> enumerate(nums):
+            diff = target - num
+            <span class="c-kw">if</span> diff <span class="c-kw">in</span> lookup:
+                <span class="c-kw">return</span> [lookup[diff], i]
+            lookup[num] = i
+        <span class="c-kw">return</span> []</code></pre>
+
+            <div class="sim-actions">
+              <button id="sim-submit-btn" class="sim-submit-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                Submit Solution
+              </button>
+              <div id="sim-verdict" class="sim-verdict hidden">
+                <span class="verdict-tag accepted">Accepted</span>
+                <span class="verdict-detail">45ms · Beats 88.4% · Memory 17.2MB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live Extension Popup & Commits -->
+          <div class="sim-ext-panel">
+            <div class="sim-popup-card">
+              <div class="sim-pp-header">
+                <div class="sim-pp-logo">
+                  <img src="assets/logo.png" width="18" height="18" alt="Logo" />
+                  <span>Leet<span class="accent-o">Sync</span></span>
+                </div>
+                <span class="sim-pp-ver">v1.0.0</span>
+              </div>
+
+              <div class="sim-pp-account">
+                <span class="live-indicator"></span>
+                <span class="sim-pp-user">Active</span>
+                <span class="sim-pp-repo">MohdAltamish/LeetCode-DSA</span>
+              </div>
+
+              <div class="sim-pp-metrics">
+                <div class="sim-metric-box">
+                  <span class="sim-metric-emoji">🔥</span>
+                  <div>
+                    <div class="sim-metric-val" id="sim-streak">7</div>
+                    <div class="sim-metric-lbl">Day Streak</div>
+                  </div>
+                </div>
+                <div class="sim-metric-box">
+                  <span class="sim-metric-emoji">⏱</span>
+                  <div>
+                    <div class="sim-metric-val" id="sim-last-time">4m 12s</div>
+                    <div class="sim-metric-lbl">Last Solve</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sim-pp-diff">
+                <div class="sim-pp-diff-top">
+                  <span>Problems Solved</span>
+                  <span class="sim-total-count" id="sim-solved">11</span>
+                </div>
+                <div class="diff-bar-line">
+                  <span class="diff-txt easy">Easy</span>
+                  <div class="bar-container"><div class="bar-fill easy" id="sim-bar-easy" style="width: 55%;"></div></div>
+                  <span class="diff-num" id="sim-count-easy">6</span>
+                </div>
+                <div class="diff-bar-line">
+                  <span class="diff-txt medium">Med</span>
+                  <div class="bar-container"><div class="bar-fill medium" id="sim-bar-medium" style="width: 36%;"></div></div>
+                  <span class="diff-num" id="sim-count-medium">4</span>
+                </div>
+                <div class="diff-bar-line">
+                  <span class="diff-txt hard">Hard</span>
+                  <div class="bar-container"><div class="bar-fill hard" id="sim-bar-hard" style="width: 9%;"></div></div>
+                  <span class="diff-num" id="sim-count-hard">1</span>
+                </div>
+              </div>
+
+              <!-- Live commit feed inside simulator -->
+              <div class="sim-commits-label">Live GitHub Commits</div>
+              <div class="sim-commits-feed" id="sim-commit-feed">
+                <div class="sim-commit-item">
+                  <span class="commit-dot easy"></span>
+                  <div class="sim-commit-body">
+                    <div class="commit-msg">[LeetSync] 0001. Two Sum | 45ms (88.4%)</div>
+                    <div class="commit-time">Synced 1m ago to MohdAltamish/LeetCode-DSA</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Privacy Comparison ─────────────────────────────────────────────── -->
+  <section class="section alt" id="privacy">
+    <div class="section-inner">
+      <div class="section-badge">Privacy First</div>
+      <h2 class="section-title">Built for developer trust.<br/>Zero blanket permissions.</h2>
+      <p class="section-sub">See how LeetSync's modern GitHub App architecture protects your code compared to legacy extensions.</p>
+
+      <div class="comparison-grid">
+        <div class="comp-card bad">
+          <div class="comp-header">
+            <span class="comp-badge bad">Legacy Extensions</span>
+            <h3>Classic OAuth App</h3>
+          </div>
+          <ul class="comp-list">
+            <li class="comp-item bad">
+              <span class="icon">✗</span>
+              <span>Demands <strong>full read/write access</strong> to ALL your public and private repositories</span>
+            </li>
+            <li class="comp-item bad">
+              <span class="icon">✗</span>
+              <span>Exposes company code, client projects, and personal repositories</span>
+            </li>
+            <li class="comp-item bad">
+              <span class="icon">✗</span>
+              <span>Cannot restrict access to a single target repository</span>
+            </li>
+            <li class="comp-item bad">
+              <span class="icon">✗</span>
+              <span>Brittle DOM-scraping breaks whenever LeetCode redesigns its UI</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="comp-card good">
+          <div class="comp-header">
+            <span class="comp-badge good">LeetSync</span>
+            <h3>Modern GitHub App</h3>
+          </div>
+          <ul class="comp-list">
+            <li class="comp-item good">
+              <span class="icon">✓</span>
+              <span><strong>"Only select repositories"</strong> — accesses strictly <code>LeetCode-DSA</code> and nothing else</span>
+            </li>
+            <li class="comp-item good">
+              <span class="icon">✓</span>
+              <span><strong>Zero visibility</strong> into any other repositories on your GitHub account</span>
+            </li>
+            <li class="comp-item good">
+              <span class="icon">✓</span>
+              <span>Add or remove allowed repositories anytime from GitHub Settings in 1 click</span>
+            </li>
+            <li class="comp-item good">
+              <span class="icon">✓</span>
+              <span>Direct GraphQL & Fetch interception — zero DOM scraping, 100% reliable</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Features Grid ──────────────────────────────────────────────────── -->
+  <section class="section" id="features">
+    <div class="section-inner">
+      <div class="section-badge">Core Features</div>
+      <h2 class="section-title">Engineered to be silent.<br/>Packed with insights.</h2>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feat-icon" style="background: rgba(249,115,22,0.1); color: var(--accent-o);">⚡</div>
+          <h3>Instant Auto-Sync</h3>
+          <p>Detects the exact moment your solution receives an Accepted verdict. Pushes your code and docs immediately without requiring a single manual click.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon" style="background: rgba(16,185,129,0.1); color: var(--accent-g);">🔒</div>
+          <h3>Per-Repository Isolation</h3>
+          <p>Backed by official GitHub App permissions. You choose which repository is granted access. All other repos on your profile remain completely invisible.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon" style="background: rgba(59,130,246,0.1); color: var(--accent-b);">📊</div>
+          <h3>Exact Difficulty Stats</h3>
+          <p>Scans every committed problem's documentation to compute live, exact counts for Easy, Medium, and Hard problems with animated visual progress bars.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon" style="background: rgba(245,158,11,0.1); color: var(--medium);">🔥</div>
+          <h3>Daily Streak Tracking</h3>
+          <p>Calculates your active problem-solving streak from verified GitHub commit timestamps. Keeps you motivated without losing momentum.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon" style="background: rgba(139,92,246,0.1); color: #a855f7);">🔄</div>
+          <h3>Multi-Format Compatibility</h3>
+          <p>Migrating from another tool? LeetSync seamlessly reads and updates repositories created with both native LeetSync and legacy LeetHub templates.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feat-icon" style="background: rgba(239,68,68,0.1); color: var(--hard);">⏱</div>
+          <h3>Problem Duration Stopwatch</h3>
+          <p>Measures how long you spent developing your solution. Records individual solve times and computes your running lifetime average.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Supported Languages ────────────────────────────────────────────── -->
+  <section class="section alt" id="languages">
+    <div class="section-inner">
+      <div class="section-badge">Universal Compatibility</div>
+      <h2 class="section-title">Code in your preferred language.<br/>We've got you covered.</h2>
+      <p class="section-sub">LeetSync auto-detects submitted languages and standardizes file extensions and comments across all supported LeetCode runtimes.</p>
+
+      <div class="languages-grid">
+        <div class="lang-card">
+          <div class="lang-icon">🐍</div>
+          <div class="lang-info">
+            <h4>Python</h4>
+            <span class="lang-ext">.py</span>
+          </div>
+          <p class="lang-desc">Python 3 & Python</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">⚡</div>
+          <div class="lang-info">
+            <h4>C++</h4>
+            <span class="lang-ext">.cpp</span>
+          </div>
+          <p class="lang-desc">C++17 & C++20</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">☕</div>
+          <div class="lang-info">
+            <h4>Java</h4>
+            <span class="lang-ext">.java</span>
+          </div>
+          <p class="lang-desc">Java 17 & Java 21</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">📜</div>
+          <div class="lang-info">
+            <h4>JavaScript</h4>
+            <span class="lang-ext">.js</span>
+          </div>
+          <p class="lang-desc">Node.js ES2022</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">🔷</div>
+          <div class="lang-info">
+            <h4>TypeScript</h4>
+            <span class="lang-ext">.ts</span>
+          </div>
+          <p class="lang-desc">TypeScript 5.x</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">🐹</div>
+          <div class="lang-info">
+            <h4>Go</h4>
+            <span class="lang-ext">.go</span>
+          </div>
+          <p class="lang-desc">Go 1.22+</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">🦀</div>
+          <div class="lang-info">
+            <h4>Rust</h4>
+            <span class="lang-ext">.rs</span>
+          </div>
+          <p class="lang-desc">Rust 2021 Edition</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">💠</div>
+          <div class="lang-info">
+            <h4>C#</h4>
+            <span class="lang-ext">.cs</span>
+          </div>
+          <p class="lang-desc">.NET 8 Runtime</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">🍎</div>
+          <div class="lang-info">
+            <h4>Swift</h4>
+            <span class="lang-ext">.swift</span>
+          </div>
+          <p class="lang-desc">Swift 5.9+</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">🎯</div>
+          <div class="lang-info">
+            <h4>Kotlin</h4>
+            <span class="lang-ext">.kt</span>
+          </div>
+          <p class="lang-desc">Kotlin JVM</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">⚙️</div>
+          <div class="lang-info">
+            <h4>C</h4>
+            <span class="lang-ext">.c</span>
+          </div>
+          <p class="lang-desc">C11 Standard</p>
+        </div>
+
+        <div class="lang-card">
+          <div class="lang-icon">💎</div>
+          <div class="lang-info">
+            <h4>Ruby</h4>
+            <span class="lang-ext">.rb</span>
+          </div>
+          <p class="lang-desc">Ruby 3.2</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Repo Output Preview ────────────────────────────────────────────── -->
+  <section class="section" id="preview">
+    <div class="section-inner">
+      <div class="section-badge">Clean Organization</div>
+      <h2 class="section-title">What your GitHub repository looks like.</h2>
+      <p class="section-sub">Standardized, zero-padded folder hierarchy with clean documentation and problem metrics.</p>
+
+      <div class="preview-container">
+        <!-- Tree View -->
+        <div class="preview-sidebar">
+          <div class="tree-header">
+            <span class="tree-title">📁 MohdAltamish / LeetCode-DSA</span>
+          </div>
+          <div class="tree-list">
+            <div class="tree-dir active">
+              <span class="dir-icon">📂</span> 0001-two-sum
+              <div class="sub-files">
+                <div class="sub-file active" id="subfile-readme" onclick="switchPreview('readme')">📄 README.md</div>
+                <div class="sub-file" id="subfile-code" onclick="switchPreview('code')">🐍 solution.py</div>
+              </div>
+            </div>
+            <div class="tree-dir">
+              <span class="dir-icon">📁</span> 0020-valid-parentheses
+            </div>
+            <div class="tree-dir">
+              <span class="dir-icon">📁</span> 0412-fizz-buzz
+            </div>
+          </div>
+        </div>
+
+        <!-- Document Preview -->
+        <div class="preview-content">
+          <div class="preview-top-bar">
+            <span id="preview-filename" class="preview-filename">0001-two-sum / README.md</span>
+            <span class="preview-badge easy">Easy</span>
+          </div>
+          <div id="preview-readme-view" class="preview-body">
+            <h1 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">1. Two Sum</h1>
+            <p><strong>Difficulty:</strong> <span style="color: var(--easy); font-weight: 600;">Easy</span> &nbsp;|&nbsp; <strong>URL:</strong> <a href="#" style="color: var(--accent-b);">Two Sum</a> &nbsp;|&nbsp; <strong>Solved in:</strong> 4m 12s</p>
+            <table class="preview-table">
+              <thead>
+                <tr><th>Metric</th><th>Value</th><th>Beats</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Runtime</td><td>45 ms</td><td>88.42%</td></tr>
+                <tr><td>Memory</td><td>17.2 MB</td><td>65.10%</td></tr>
+              </tbody>
+            </table>
+            <h3 style="font-size: 15px; margin: 16px 0 8px;">Problem Statement</h3>
+            <p style="color: var(--text-2); font-size: 13px;">Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>.</p>
+          </div>
+          <div id="preview-code-view" class="preview-body hidden">
+            <pre><code><span class="c-kw">class</span> <span class="c-fn">Solution</span>:
+    <span class="c-kw">def</span> <span class="c-fn">twoSum</span>(self, nums: List[int], target: int) -> List[int]:
+        seen = {}
+        <span class="c-kw">for</span> i, n <span class="c-kw">in</span> enumerate(nums):
+            diff = target - n
+            <span class="c-kw">if</span> diff <span class="c-kw">in</span> seen:
+                <span class="c-kw">return</span> [seen[diff], i]
+            seen[n] = i
+        <span class="c-kw">return</span> []</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Plans & Pricing ────────────────────────────────────────────────── -->
+  <section class="section alt" id="pricing">
+    <div class="section-inner">
+      <div class="section-badge">Plans & Pricing</div>
+      <h2 class="section-title">100% Free & Open Source.<br/>No subscriptions. Ever.</h2>
+      <p class="section-sub">LeetSync is built by developers, for developers. No paid tiers, no paywalls, no code limits.</p>
+
+      <div class="pricing-grid">
+        <div class="pricing-card featured">
+          <div class="pricing-tag">Community Edition</div>
+          <div class="pricing-header">
+            <h3>Open Source Developer</h3>
+            <div class="pricing-price">
+              <span class="currency">$</span><span class="amount">0</span>
+              <span class="period">/ forever</span>
+            </div>
+            <p class="pricing-desc">Everything you need to automate your competitive programming portfolio with zero restrictions.</p>
+          </div>
+
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> <strong>Unlimited</strong> LeetCode submissions & syncs</li>
+            <li><span class="check">✓</span> <strong>Per-Repository scoping</strong> via GitHub App</li>
+            <li><span class="check">✓</span> <strong>Real-time stats</strong>: streaks, problem timer, difficulty bars</li>
+            <li><span class="check">✓</span> <strong>Multi-language support</strong> (18+ languages)</li>
+            <li><span class="check">✓</span> <strong>Backward compatible</strong> with LeetHub repository templates</li>
+            <li><span class="check">✓</span> <strong>Zero third-party telemetry</strong> or code collection</li>
+            <li><span class="check">✓</span> <strong>MIT Licensed</strong> code for total auditability</li>
+          </ul>
+
+          <div class="pricing-cta">
+            <a href="https://github.com/apps/leetsync-app/installations/new" target="_blank" class="btn-primary" style="width: 100%; justify-content: center;">
+              Install LeetSync App ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-tag ghost">Self-Hosted</div>
+          <div class="pricing-header">
+            <h3>Custom GitHub App</h3>
+            <div class="pricing-price">
+              <span class="currency">$</span><span class="amount">0</span>
+              <span class="period">/ MIT License</span>
+            </div>
+            <p class="pricing-desc">Deploy your own private GitHub App registration with custom client IDs and webhooks.</p>
+          </div>
+
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Full source code on GitHub</li>
+            <li><span class="check">✓</span> Custom OAuth and App keys</li>
+            <li><span class="check">✓</span> Complete control over deployment & webhooks</li>
+            <li><span class="check">✓</span> Community contributions & PRs welcome</li>
+          </ul>
+
+          <div class="pricing-cta">
+            <a href="https://github.com/MohdAltamish/LeetSync" target="_blank" class="btn-secondary" style="width: 100%; justify-content: center;">
+              View Source on GitHub →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How It Works Steps ─────────────────────────────────────────────── -->
+  <section class="section" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-badge">Setup Guide</div>
+      <h2 class="section-title">Up and running in 60 seconds.</h2>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h3>Install the GitHub App</h3>
+          <p>Click <a href="https://github.com/apps/leetsync-app/installations/new" target="_blank" style="color: var(--accent-o);">Install GitHub App</a> and choose <strong>"Only select repositories"</strong> to grant access strictly to your LeetCode repo.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h3>Download & Load Extension</h3>
+          <p>Grab the <a href="downloads/leetsync-extension.zip" download style="color: var(--accent-g); font-weight: 600;">extension zip bundle</a>, unzip it, open <code>chrome://extensions</code> in Chrome, toggle <strong>Developer mode</strong>, and click <strong>Load unpacked</strong>.</p>
+          <a href="downloads/leetsync-extension.zip" download class="btn-download" style="margin-top: 14px; padding: 8px 16px; font-size: 13px; display: inline-flex;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download ZIP
+          </a>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h3>One-Click Connect</h3>
+          <p>Click <strong>"Connect with GitHub"</strong> in the popup. Paste the device code (already auto-copied to your clipboard), and you're paired!</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <h3>Solve & Auto-Sync</h3>
+          <p>Solve any problem on LeetCode. The moment your solution is Accepted, your repository updates automatically in the background!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA Section ────────────────────────────────────────────────────── -->
+  <section class="cta-banner">
+    <div class="section-inner" style="text-align: center;">
+      <h2 class="cta-heading">Ready to showcase your LeetCode journey?</h2>
+      <p class="cta-description">100% free and open-source. Never worry about manual commits again.</p>
+      <div class="hero-actions" style="justify-content: center;">
+        <a href="downloads/leetsync-extension.zip" download class="btn-download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Extension (.zip)
+        </a>
+        <a href="https://github.com/apps/leetsync-app/installations/new" target="_blank" class="btn-primary">
+          Install GitHub App ↗
+        </a>
+        <a href="https://github.com/MohdAltamish/LeetSync" target="_blank" class="btn-secondary">
+          View GitHub Repository →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.png" width="22" height="22" alt="Logo" />
+        <span>Leet<span class="accent-o">Sync</span></span>
+        <span class="footer-badge">v1.0.0</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="https://github.com/apps/leetsync-app" target="_blank">GitHub App</a>
+        <a href="https://github.com/MohdAltamish/LeetSync" target="_blank">Source Code</a>
+        <a href="https://github.com/MohdAltamish/LeetSync/blob/main/PRIVACY.md" target="_blank">Privacy Policy</a>
+        <a href="https://github.com/MohdAltamish/LeetSync/blob/main/LICENSE" target="_blank">MIT License</a>
+        <a href="https://github.com/MohdAltamish/LeetSync/issues" target="_blank">Report Issue</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Created with care by <a href="https://github.com/MohdAltamish" target="_blank" style="color: var(--text-1); font-weight: 600;">Mohd Altamish</a> · Free & Open Source Forever</p>
+    </div>
+  </footer>
+
+  <!-- ── Interactive Simulator Script ───────────────────────────────────── -->
+  <script>
+    let solvedCount = 11;
+    let easyCount = 6;
+    let isSubmitting = false;
+
+    const sampleCodes = {
+      py: {
+        name: 'Python 3 · Two Sum',
+        filename: 'solution.py',
+        code: `<span class="c-kw">class</span> <span class="c-fn">Solution</span>:
+    <span class="c-kw">def</span> <span class="c-fn">twoSum</span>(self, nums: List[int], target: int) -> List[int]:
+        lookup = {}
+        <span class="c-kw">for</span> i, num <span class="c-kw">in</span> enumerate(nums):
+            diff = target - num
+            <span class="c-kw">if</span> diff <span class="c-kw">in</span> lookup:
+                <span class="c-kw">return</span> [lookup[diff], i]
+            lookup[num] = i
+        <span class="c-kw">return</span> []`
+      },
+      cpp: {
+        name: 'C++20 · Two Sum',
+        filename: 'solution.cpp',
+        code: `<span class="c-kw">class</span> <span class="c-fn">Solution</span> {
+<span class="c-kw">public</span>:
+    vector&lt;<span class="c-kw">int</span>&gt; <span class="c-fn">twoSum</span>(vector&lt;<span class="c-kw">int</span>&gt;&amp; nums, <span class="c-kw">int</span> target) {
+        unordered_map&lt;<span class="c-kw">int</span>, <span class="c-kw">int</span>&gt; prev;
+        <span class="c-kw">for</span> (<span class="c-kw">int</span> i = 0; i &lt; nums.size(); ++i) {
+            <span class="c-kw">int</span> diff = target - nums[i];
+            <span class="c-kw">if</span> (prev.count(diff)) <span class="c-kw">return</span> {prev[diff], i};
+            prev[nums[i]] = i;
+        }
+        <span class="c-kw">return</span> {};
+    }
+};`
+      },
+      java: {
+        name: 'Java 17 · Two Sum',
+        filename: 'Solution.java',
+        code: `<span class="c-kw">class</span> <span class="c-fn">Solution</span> {
+    <span class="c-kw">public</span> <span class="c-kw">int</span>[] <span class="c-fn">twoSum</span>(<span class="c-kw">int</span>[] nums, <span class="c-kw">int</span> target) {
+        Map&lt;Integer, Integer&gt; map = <span class="c-kw">new</span> HashMap&lt;&gt;();
+        <span class="c-kw">for</span> (<span class="c-kw">int</span> i = 0; i &lt; nums.length; i++) {
+            <span class="c-kw">int</span> comp = target - nums[i];
+            <span class="c-kw">if</span> (map.containsKey(comp)) <span class="c-kw">return</span> <span class="c-kw">new</span> <span class="c-kw">int</span>[]{map.get(comp), i};
+            map.put(nums[i], i);
+        }
+        <span class="c-kw">return</span> <span class="c-kw">new</span> <span class="c-kw">int</span>[]{};
+    }
+}`
+      },
+      ts: {
+        name: 'TypeScript 5 · Two Sum',
+        filename: 'solution.ts',
+        code: `<span class="c-kw">function</span> <span class="c-fn">twoSum</span>(nums: <span class="c-kw">number</span>[], target: <span class="c-kw">number</span>): <span class="c-kw">number</span>[] {
+    <span class="c-kw">const</span> map = <span class="c-kw">new</span> Map&lt;<span class="c-kw">number</span>, <span class="c-kw">number</span>&gt;();
+    <span class="c-kw">for</span> (<span class="c-kw">let</span> i = 0; i &lt; nums.length; i++) {
+        <span class="c-kw">const</span> diff = target - nums[i];
+        <span class="c-kw">if</span> (map.has(diff)) <span class="c-kw">return</span> [map.get(diff)!, i];
+        map.set(nums[i], i);
+    }
+    <span class="c-kw">return</span> [];
+};`
+      }
+    };
+
+    let currentSimLang = 'py';
+
+    function switchSimLang(lang) {
+      currentSimLang = lang;
+      const data = sampleCodes[lang];
+      document.getElementById('sim-code-content').innerHTML = data.code;
+      document.getElementById('sim-problem-meta').textContent = data.name;
+
+      document.querySelectorAll('.file-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.textContent.includes(data.filename));
+      });
+    }
+
+    document.getElementById('sim-submit-btn').addEventListener('click', () => {
+      if (isSubmitting) return;
+      isSubmitting = true;
+
+      const btn = document.getElementById('sim-submit-btn');
+      const tag = document.getElementById('sim-status-tag');
+      const verdict = document.getElementById('sim-verdict');
+
+      btn.disabled = true;
+      btn.innerHTML = 'Testing solution...';
+      tag.textContent = 'Evaluating';
+      tag.className = 'sim-status-tag pending';
+
+      setTimeout(() => {
+        btn.innerHTML = 'Syncing to GitHub...';
+        tag.textContent = 'Syncing';
+      }, 600);
+
+      setTimeout(() => {
+        verdict.classList.remove('hidden');
+        btn.innerHTML = '✓ Submitted & Synced';
+        tag.textContent = 'Synced';
+        tag.className = 'sim-status-tag success';
+
+        // Increment stats
+        solvedCount++;
+        easyCount++;
+        document.getElementById('sim-solved').textContent = solvedCount;
+        document.getElementById('sim-count-easy').textContent = easyCount;
+        document.getElementById('sim-streak').textContent = '8';
+
+        // Update easy bar percentage
+        const newPct = Math.round((easyCount / solvedCount) * 100);
+        document.getElementById('sim-bar-easy').style.width = newPct + '%';
+
+        // Add new live commit
+        const filename = sampleCodes[currentSimLang].filename;
+        const feed = document.getElementById('sim-commit-feed');
+        const newCommit = document.createElement('div');
+        newCommit.className = 'sim-commit-item new-commit';
+        newCommit.innerHTML = `
+          <span class="commit-dot easy"></span>
+          <div class="sim-commit-body">
+            <div class="commit-msg">[LeetSync] 0001. Two Sum (${filename}) | 45ms (88.4%)</div>
+            <div class="commit-time">Just now to MohdAltamish/LeetCode-DSA</div>
+          </div>
+        `;
+        feed.prepend(newCommit);
+
+        setTimeout(() => {
+          btn.disabled = false;
+          btn.innerHTML = 'Submit Solution Again';
+          isSubmitting = false;
+        }, 2200);
+      }, 1400);
+    });
+
+    function switchPreview(type) {
+      const readme = document.getElementById('preview-readme-view');
+      const code = document.getElementById('preview-code-view');
+      const title = document.getElementById('preview-filename');
+      const tabReadme = document.getElementById('subfile-readme');
+      const tabCode = document.getElementById('subfile-code');
+
+      if (type === 'code') {
+        readme.classList.add('hidden');
+        code.classList.remove('hidden');
+        title.textContent = '0001-two-sum / solution.py';
+        tabReadme.classList.remove('active');
+        tabCode.classList.add('active');
+      } else {
+        code.classList.add('hidden');
+        readme.classList.remove('hidden');
+        title.textContent = '0001-two-sum / README.md';
+        tabCode.classList.remove('active');
+        tabReadme.classList.add('active');
+      }
+    }
+
+    function toggleInstallModal(show) {
+      const modal = document.getElementById('install-modal');
+      if (show) {
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function closeInstallModal(e) {
+      if (e.target.id === 'install-modal') {
+        toggleInstallModal(false);
+      }
+    }
+
+    function copyChromeUrl(btn) {
+      navigator.clipboard.writeText('chrome://extensions').then(() => {
+        const span = btn.querySelector('span');
+        const orig = span.textContent;
+        span.textContent = 'Copied "chrome://extensions"! ✓';
+        btn.style.borderColor = 'var(--accent-g)';
+        btn.style.color = 'var(--accent-g)';
+        setTimeout(() => {
+          span.textContent = orig;
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }, 2200);
+      });
+    }
+
+    // Automatically show setup modal when clicking download
+    document.querySelectorAll('a[download]').forEach(el => {
+      el.addEventListener('click', () => {
+        setTimeout(() => {
+          toggleInstallModal(true);
+        }, 600);
+      });
+    });
+  </script>
+
+  <!-- ── Installation Guide Modal ─────────────────────────────────────────── -->
+  <div id="install-modal" class="modal-backdrop hidden" onclick="closeInstallModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <span class="modal-badge">30-Second Setup</span>
+          <h3>How to Load LeetSync into Chrome</h3>
+        </div>
+        <button class="modal-close" onclick="toggleInstallModal(false)">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="m-step">
+          <div class="m-step-num">1</div>
+          <div class="m-step-text">
+            <strong>Unzip the Downloaded File</strong>
+            <p>Locate <code>leetsync-extension.zip</code> in your Downloads and extract it.</p>
+          </div>
+        </div>
+
+        <div class="m-step">
+          <div class="m-step-num">2</div>
+          <div class="m-step-text">
+            <strong>Open Chrome Extensions</strong>
+            <p>Paste <code>chrome://extensions</code> in a new tab, or click below:</p>
+            <button class="btn-copy-code" onclick="copyChromeUrl(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span>Copy "chrome://extensions"</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="m-step">
+          <div class="m-step-num">3</div>
+          <div class="m-step-text">
+            <strong>Enable Developer Mode & Load Unpacked</strong>
+            <p>Turn on <strong>Developer mode</strong> (top-right switch), click <strong>Load unpacked</strong>, and select the extracted folder.</p>
+          </div>
+        </div>
+
+        <div class="m-step">
+          <div class="m-step-num">4</div>
+          <div class="m-step-text">
+            <strong>Connect with GitHub</strong>
+            <p>Click the LeetSync icon in your Chrome extensions bar, click <strong>"Connect with GitHub"</strong>, and authorize!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="toggleInstallModal(false)" style="width: 100%; justify-content: center;">
+          Got it, ready to code! 🚀
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
