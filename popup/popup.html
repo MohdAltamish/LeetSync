@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeetSync</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#f97316" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M2 17l10 5 10-5" stroke="#f97316" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M2 12l10 5 10-5" stroke="#10b981" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-text">Leet<span class="logo-accent">Sync</span></span>
+    </div>
+    <span class="version">v1.0.0</span>
+  </header>
+
+  <!-- ── View 1: Setup ──────────────────────────────────────────────────── -->
+  <section id="view-setup" class="view active">
+    <p class="view-title">Connect GitHub</p>
+    <p class="view-sub">Paste a Personal Access Token with <code>repo</code> scope.</p>
+
+    <div class="input-group">
+      <input id="pat-input" type="password" class="input"
+        placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false"/>
+      <button id="pat-toggle" class="icon-btn" title="Show / hide token">
+        <svg id="eye-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        <svg id="eye-hide" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/>
+          <path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/>
+          <line x1="1" y1="1" x2="23" y2="23"/>
+        </svg>
+      </button>
+    </div>
+
+    <div id="setup-error" class="error-msg hidden"></div>
+
+    <button id="connect-btn" class="btn btn-primary">
+      <span id="connect-label">Connect to GitHub</span>
+      <span id="connect-spinner" class="spinner hidden"></span>
+    </button>
+
+    <a href="https://github.com/settings/tokens/new?scopes=repo&description=LeetSync"
+       target="_blank" class="help-link">How to create a token →</a>
+  </section>
+
+  <!-- ── View 2: Repo Picker ────────────────────────────────────────────── -->
+  <section id="view-picker" class="view">
+    <div class="connected-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="picker-username"></span>
+    </div>
+
+    <p class="view-title">Choose a repository</p>
+
+    <div id="repo-skeleton" class="skeleton-box"></div>
+    <select id="repo-select" class="select hidden">
+      <option value="">— select a repo —</option>
+    </select>
+
+    <div class="divider"><span>or</span></div>
+
+    <div id="create-repo-area">
+      <div id="create-repo-input-row" class="hidden">
+        <input id="new-repo-name" class="input" type="text" placeholder="my-leetcode-solutions"/>
+        <button id="create-repo-confirm" class="btn btn-secondary">
+          <span id="create-label">Create</span>
+          <span id="create-spinner" class="spinner hidden"></span>
+        </button>
+      </div>
+      <button id="create-repo-btn" class="btn btn-ghost">+ Create new repo</button>
+    </div>
+
+    <div id="picker-error" class="error-msg hidden"></div>
+
+    <button id="start-sync-btn" class="btn btn-primary" disabled>Start Syncing →</button>
+  </section>
+
+  <!-- ── View 3: Dashboard ──────────────────────────────────────────────── -->
+  <section id="view-dashboard" class="view">
+
+    <!-- Status bar -->
+    <div class="status-row">
+      <span class="live-dot"></span>
+      <span class="live-label">Active</span>
+      <a id="repo-link" href="#" target="_blank" class="repo-chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+        </svg>
+        <span id="repo-name-display"></span>
+      </a>
+    </div>
+
+    <!-- ── Streak + Timer row ──────────────────────────────────────────── -->
+    <div class="highlight-row">
+
+      <!-- Daily Streak -->
+      <div class="highlight-card streak-card">
+        <div class="highlight-icon">🔥</div>
+        <div class="highlight-body">
+          <span class="highlight-num" id="streak-count">0</span>
+          <span class="highlight-label">Day Streak</span>
+        </div>
+        <div class="highlight-sub" id="best-streak-label">Best: 0</div>
+      </div>
+
+      <!-- Timer (last solve) -->
+      <div class="highlight-card timer-card">
+        <div class="highlight-icon">⏱</div>
+        <div class="highlight-body">
+          <span class="highlight-num" id="last-time">—</span>
+          <span class="highlight-label">Last Solve</span>
+        </div>
+        <div class="highlight-sub" id="avg-time-label">Avg: —</div>
+      </div>
+
+    </div>
+
+    <!-- ── Difficulty breakdown ────────────────────────────────────────── -->
+    <div class="diff-section">
+      <div class="diff-header">
+        <span class="diff-title">Problems Solved</span>
+        <span class="diff-total" id="stat-total">0</span>
+      </div>
+
+      <!-- Easy -->
+      <div class="diff-row">
+        <span class="diff-label easy">Easy</span>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar easy" id="bar-easy"></div>
+        </div>
+        <span class="diff-count" id="stat-easy">0</span>
+      </div>
+
+      <!-- Medium -->
+      <div class="diff-row">
+        <span class="diff-label medium">Medium</span>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar medium" id="bar-medium"></div>
+        </div>
+        <span class="diff-count" id="stat-medium">0</span>
+      </div>
+
+      <!-- Hard -->
+      <div class="diff-row">
+        <span class="diff-label hard">Hard</span>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar hard" id="bar-hard"></div>
+        </div>
+        <span class="diff-count" id="stat-hard">0</span>
+      </div>
+    </div>
+
+    <!-- ── Last synced ─────────────────────────────────────────────────── -->
+    <div id="last-sync-row" class="last-sync hidden">
+      <span id="last-sync-diff-badge" class="diff-badge"></span>
+      <span id="last-sync-text"></span>
+      <span id="last-sync-time" class="last-sync-time"></span>
+    </div>
+
+    <!-- ── Settings ───────────────────────────────────────────────────── -->
+    <div class="settings-section">
+      <button id="settings-toggle" class="settings-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+        </svg>
+        Settings
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+
+      <div id="settings-panel" class="settings-panel hidden">
+        <label class="toggle-row">
+          <span>Auto-sync on Accept</span>
+          <div class="toggle-wrap">
+            <input type="checkbox" id="setting-autosync" checked/>
+            <span class="toggle-track"></span>
+          </div>
+        </label>
+        <label class="toggle-row">
+          <span>Skip re-submissions</span>
+          <div class="toggle-wrap">
+            <input type="checkbox" id="setting-skipresub" checked/>
+            <span class="toggle-track"></span>
+          </div>
+        </label>
+        <div class="settings-row-actions">
+          <button id="settings-save" class="btn btn-secondary btn-sm">Save</button>
+          <span id="settings-saved" class="saved-msg hidden">Saved ✓</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Footer ─────────────────────────────────────────────────────── -->
+    <div class="footer-actions">
+      <button id="disconnect-btn" class="btn btn-danger-ghost">Disconnect</button>
+    </div>
+    <div id="disconnect-confirm" class="confirm-row hidden">
+      <span>Are you sure?</span>
+      <button id="disconnect-yes" class="btn btn-danger btn-sm">Yes</button>
+      <button id="disconnect-no"  class="btn btn-ghost btn-sm">Cancel</button>
+    </div>
+
+  </section>
+
+  <script src="popup.js"></script>
+</body>
+</html>
