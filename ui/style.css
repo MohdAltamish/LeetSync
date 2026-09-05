@@ -109,109 +109,146 @@ code, pre {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  background: rgba(7, 9, 14, 0.8);
+  z-index: 1000;
+  height: 68px;
+  background: rgba(7, 9, 14, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
 }
 
 .nav-inner {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1220px;
   margin: 0 auto;
-  padding: 16px 24px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
-.nav-logo {
-  display: flex;
+/* Brand */
+.nav-brand {
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
 .nav-logo-img {
   width: 28px;
   height: 28px;
   border-radius: 6px;
+  display: block;
+  flex-shrink: 0;
 }
 
-.nav-links {
+.nav-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--text-1);
+  line-height: 1;
+}
+
+.nav-badge-ver {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-3);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Center Menu Links */
+.nav-menu {
   display: flex;
   align-items: center;
-  gap: 22px;
-  font-size: 14px;
-  font-weight: 500;
+  gap: 4px;
+}
+
+.nav-item {
   color: var(--text-2);
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 7px 11px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+  white-space: nowrap;
+  text-decoration: none;
 }
 
-.nav-links a {
-  transition: color 0.2s ease;
+.nav-item:hover {
+  color: var(--text-1);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.nav-links a:hover {
+/* Right Action Buttons Group */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 35px;
+  padding: 0 13px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.nav-btn-gh {
+  background: var(--surface);
+  border: 1px solid var(--border);
   color: var(--text-1);
 }
 
-.nav-gh {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  color: var(--text-1) !important;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.nav-gh:hover {
+.nav-btn-gh:hover {
   border-color: var(--text-2);
   background: var(--surface-hover);
+  transform: translateY(-1px);
 }
 
-.nav-download {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+.nav-btn-download {
   background: rgba(16, 185, 129, 0.12);
   border: 1px solid rgba(16, 185, 129, 0.35);
-  color: var(--accent-g) !important;
-  padding: 7px 15px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  color: var(--accent-g);
 }
 
-.nav-download:hover {
+.nav-btn-download:hover {
   background: rgba(16, 185, 129, 0.22);
   border-color: var(--accent-g);
   transform: translateY(-1px);
 }
 
-.nav-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--accent-o);
-  color: #fff !important;
-  padding: 8px 18px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  box-shadow: 0 4px 14px var(--accent-o-glow);
-  transition: transform 0.15s ease, background 0.2s;
+.nav-btn-cta {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 10px var(--accent-o-glow);
 }
 
-.nav-cta:hover {
+.nav-btn-cta:hover {
   background: #ea6505;
   transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.4);
 }
 
 /* ── Hero Section ───────────────────────────────────────────────────────── */
@@ -1470,10 +1507,38 @@ code, pre {
   }
 }
 
-@media (max-width: 768px) {
-  .nav-links a:not(.nav-gh):not(.nav-cta) {
+@media (max-width: 1080px) {
+  .nav-menu {
+    gap: 2px;
+  }
+  .nav-item {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-menu {
     display: none;
   }
+}
+
+@media (max-width: 600px) {
+  .nav-btn-gh span,
+  .nav-btn-download span {
+    display: none;
+  }
+  .nav-btn-gh,
+  .nav-btn-download {
+    padding: 0 10px;
+  }
+  .nav-btn-cta {
+    padding: 0 12px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 768px) {
   .hero-stats-strip {
     flex-wrap: wrap;
     gap: 16px;
