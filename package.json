@@ -6,7 +6,7 @@
   "description": "Sync your LeetCode solutions to GitHub, automatically.",
   "author": "Mohd Altamish",
   "scripts": {
-    "package": "mkdir -p docs/downloads downloads && zip -r docs/downloads/leetsync-extension.zip manifest.json background popup scripts icons assets LICENSE PRIVACY.md -x \"*.DS_Store*\" && cp docs/downloads/leetsync-extension.zip downloads/",
+    "package": "mkdir -p ui/downloads downloads && zip -r ui/downloads/leetsync-extension.zip manifest.json background popup scripts icons assets LICENSE PRIVACY.md -x \"*.DS_Store*\" && cp ui/downloads/leetsync-extension.zip downloads/",
     "format": "prettier --write **/*.{js,css,html}",
     "lint": "eslint ."
   },
